@@ -231,9 +231,3 @@ def test_checkout_error(login, browser, wait, base_url):
     assert error_text == "Error: First Name is required", (
         f"Ожидалась ошибка 'First Name is required', но получено: '{error_text}'"
     )
-
-
-# Команды для запуска:
-# pytest tests/ui/test_ui.py --browser={браузер}
-# pytest tests/ui/test_ui.py --browser={браузер} --alluredir=./allure-results Для фиксации
-# allure serve ./allure-results - просмотр отчёта об прохождении тестов в ui формате
