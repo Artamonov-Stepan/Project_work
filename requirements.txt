@@ -2,4 +2,7 @@ pytest == 8.4.1
 requests == 2.32.4
 allure-python-commons == 2.15.0
 selenium == 4.35.0
-webdriver-manager ==4.0.2
+webdriver-manager == 4.0.2
+PyMySQL == 1.0.2
+faker == 18.11.2
+bcrypt == 4.3.0
