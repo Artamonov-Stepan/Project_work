@@ -1,6 +1,7 @@
 import pytest
 from tests.ui.page_objects.login_page import LoginPage
 
+
 def pytest_addoption(parser):
     parser.addoption(
         "--base_url",
@@ -8,9 +9,11 @@ def pytest_addoption(parser):
         help="Base URL for UI tests",
     )
 
+
 @pytest.fixture(scope="session")
 def base_url(request):
     return request.config.getoption("--base_url")
+
 
 @pytest.fixture
 def login(browser, base_url, wait):

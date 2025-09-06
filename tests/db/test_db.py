@@ -25,7 +25,9 @@ def test_customer_profile_data_displayed_correctly(login_as_customer, browser, w
     )
 
 
-def test_customer_login_with_wrong_password(test_customer, browser, base_url, wait, customer_data):
+def test_customer_login_with_wrong_password(
+    test_customer, browser, base_url, wait, customer_data
+):
     customer_id, customer_data = test_customer
     login_page = LoginPage(browser, wait)
 
