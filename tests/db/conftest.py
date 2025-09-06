@@ -2,14 +2,19 @@ import pytest
 import pymysql
 import logging
 import allure
+import socket
 from selenium.webdriver.support import expected_conditions as EC
 from tests.db.page_objects.login_page import LoginPage
 from .opencart_db import OpenCartDB
 
 
-
 def pytest_addoption(parser):
-    parser.addoption("--host", default="127.0.0.1")
+    try:
+        socket.gethostbyname("mariadb")
+        default_host = "mariadb"
+    except socket.gaierror:
+        default_host = "127.0.0.1"
+    parser.addoption("--host", default=default_host)
     parser.addoption("--port", type=int, default=3306)
     parser.addoption("--db", default="bitnami_opencart")
     parser.addoption("--user", default="bn_opencart")

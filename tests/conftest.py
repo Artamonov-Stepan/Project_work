@@ -57,7 +57,11 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope="function")
 def browser(request):
     browser_name = request.config.getoption("--browser").lower()
-    headless = request.config.getoption("--headless")
+    # headless = request.config.getoption("--headless")
+    headless = True
+
+    if not headless:
+        headless = True
 
     driver = None
     if browser_name in ["ch", "chrome"]:
@@ -103,5 +107,5 @@ def wait(browser):
     return WebDriverWait(browser, 10)
 
 
-# pytest tests/ui/test_ui.py --alluredir=./allure-results Для фиксации
+# pytest tests/ --alluredir=./allure-results Для фиксации
 # allure serve ./allure-results - просмотр отчёта об прохождении тестов в ui формате

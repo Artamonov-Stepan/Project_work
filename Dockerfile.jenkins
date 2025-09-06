@@ -1,0 +1,49 @@
+# Dockerfile.jenkins
+FROM jenkins/jenkins:lts
+
+USER root
+
+# Установка системных зависимостей
+RUN apt-get update && \
+    apt-get install -y \
+        python3 \
+        python3-pip \
+        python3-venv \
+        curl \
+        unzip \
+        openjdk-17-jre \
+        git \
+        firefox-esr \
+    && rm -rf /var/lib/apt/lists/*
+
+# Создаём виртуальное окружение
+RUN python3 -m venv /opt/venv
+
+# Устанавливаем Python-пакеты
+RUN /opt/venv/bin/pip install --upgrade pip && \
+    /opt/venv/bin/pip install \
+        pytest==8.4.1 \
+        requests==2.32.4 \
+        allure-python-commons==2.15.0 \
+        allure-pytest==2.15.0 \
+        selenium==4.35.0 \
+        webdriver-manager==4.0.2 \
+        PyMySQL==1.0.2 \
+        faker==18.11.2 \
+        bcrypt==4.3.0
+
+# Установка Allure CLI
+RUN curl -o allure-2.27.0.tgz -L https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.tgz && \
+    tar -xzf allure-2.27.0.tgz -C /opt && \
+    rm allure-2.27.0.tgz && \
+    ln -s /opt/allure-2.27.0/bin/allure /usr/local/bin/allure && \
+    chmod +x /usr/local/bin/allure
+
+# Делаем venv активным
+ENV PATH="/opt/venv/bin:${PATH}"
+
+# Переключаемся на пользователя Jenkins
+USER jenkins
+
+VOLUME /var/jenkins_home
+EXPOSE 8080
